@@ -75,15 +75,36 @@
         <h1><b>User</b></h1>
         <p>First Name: {{users?.firstName}}</p>
         <p>Last Name: {{users?.lastName}}</p>
+        <p>__________________________________</p>
         <h2><i>Payments:</i></h2>
         <ul>
           <li *ngFor="let deposit of users.deposit">
-            <p>Payment: {{deposit?.depositValue}} Date: {{deposit?.date}}</p>
+            <p>Payment: {{deposit?.depositValue}} €</p>
+            <p> Date: {{deposit?.date}}</p>
+            <div *ngIf="deposit?.authorized" style="color: green;">
+              <p><i>erfolgreich</i></p>
+            </div>
+            <div *ngIf="!deposit?.authorized" style="color: red;">
+              <p><i>ausstehend</i></p>
+            </div>
           </li>
         </ul>
+        <p>__________________________________</p>
       </div>
     </div>
   </div>
+
+  <div class="testSort" style="text-align: center;">
+    <div>
+      <h1>Zahlungen geordnet:</h1>
+      <ul>
+        <li *ngFor="let usersSort of userAccountsSorted">
+          <p>Kontostand: {{usersSort?.balance}} | Name: {{usersSort?.firstName}}, {{usersSort?.lastName}} </p>
+        </li>
+      </ul>
+    </div>
+  </div>
+
 
 
 </body>

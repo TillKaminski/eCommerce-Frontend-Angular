@@ -21,8 +21,16 @@ export class UserAccountService {
     return this.http.get<UserAccount[]>(`${this.API_URL}/all`);
   }
 
+  public getUsersSorted(): Observable<UserAccount[]> {
+    return this.http.get<UserAccount[]>(`${this.API_URL}/allsorted`);
+  }
+
   public getPaymentsByUser(userId: number): Observable<Deposit[]> {
     return this.http.get<Deposit[]>(`${this.API_URL}/${userId}/payments`)
+  }
+
+  public getPaymentsByUserSorted(userId: number): Observable<Deposit[]> {
+    return this.http.get<Deposit[]>(`${this.API_URL}/${userId}/paymentssorted`)
   }
 
 

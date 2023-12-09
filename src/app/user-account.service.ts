@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http'
 import { Observable } from 'rxjs';
-import { UserAccount } from './userAccount';
+import { UserAccount, Deposit } from './userAccount';
+
 
 @Injectable({
   providedIn: 'root'
@@ -18,6 +19,10 @@ export class UserAccountService {
 
   public getUsers(): Observable<UserAccount[]> {
     return this.http.get<UserAccount[]>(`${this.API_URL}/all`);
+  }
+
+  public getPaymentsByUser(userId: number): Observable<Deposit[]> {
+    return this.http.get<Deposit[]>(`${this.API_URL}/${userId}/payments`)
   }
 
 

@@ -4,6 +4,13 @@ export interface UserAccount {
     lastName: string,
     eMail: string,
     balance: number,
-    userRole: string
+    userRole: string,
+    deposit: Deposit[]
 
+}
+export interface Deposit {
+    id: number,
+    date: Date,
+    depositValue: number,
+    authorized: boolean
 }

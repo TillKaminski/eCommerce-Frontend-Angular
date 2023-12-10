@@ -2,9 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { UserAccountService } from './user-account.service';
 import { UserAccount, Deposit } from './userAccount';
 import { HttpErrorResponse } from '@angular/common/http';
-
-
-
 @Component({
   selector: 'app-user',
   templateUrl: './user.component.html',

@@ -1,10 +1,23 @@
 <!-- Header -->
-<!-- <app-header></app-header> -->
+<div class="container">
+  <div class="row">
+    <div class="col-sm-12">
+      <app-header class="header"></app-header>
+    </div>
+  </div>
+  <!-- Body -->
+  <div class="row">
+    <div class="col-sm-12">
+      <main>
+        <router-outlet></router-outlet>
+      </main>
+    </div>
+  </div>
 
-<!-- Hauptinhalt, der je nach Router-Outlet dynamisch geladen wird -->
-<main>
-  <router-outlet></router-outlet>
-</main>
-
-<!-- Footer -->
-<!-- <app-footer></app-footer> -->
+  <!-- Footer -->
+  <div class="row">
+    <div class="col-sm-12">
+      <app-footer class="footer"></app-footer>
+    </div>
+  </div>
+</div>

@@ -12,5 +12,6 @@ export interface Deposit {
     id: number,
     date: Date,
     depositValue: number,
+    description: string,
     authorized: boolean
 }

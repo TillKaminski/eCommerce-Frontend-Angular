@@ -1,6 +1,46 @@
-<h1 style="text-align: center;">LOGIN!</h1>
-
+<!--<h1 style="text-align: center;">LOGIN!</h1>-->
+<!--
 <div style="text-align: center;">
-    <button (click)="navToUserPage()" type="button" class="btn btn-primary">USER</button>
-    <button (click)="navToEmployeePage()" type="button" class="btn btn-secondary">EMPLOYEE</button>
+    <div class="input-group mb-3">
+        <span class="input-group-text" id="inputGroup-sizing-default">Default</span>
+        <input type="text" class="form-control" aria-label="Sizing example input"
+            aria-describedby="inputGroup-sizing-default">
+        <button (click)="navToUserPage()" type="button" class="btn btn-primary">USER</button>
+    </div>
+
+    <div class="input-group mb-3">
+        <span class="input-group-text" id="inputGroup-sizing-default">Default</span>
+        <input type="text" class="form-control" aria-label="Sizing example input"
+            aria-describedby="inputGroup-sizing-default">
+        <button (click)="navToEmployeePage()" type="button" class="btn btn-secondary">EMPLOYEE</button>
+    </div>  
 </div>
+-->
+
+
+<form>
+    <div class="center-horizontal">
+        <div class="center-vertical">
+            <div>
+                <input type="text" class="centered-input" placeholder="Nutzername(Email Addresse)">
+            </div>
+            <div>
+                <input type="password" class="centered-input" placeholder="Passwort">
+            </div>
+
+            <div style="text-align: center;">
+                <!-- Submit button -->
+                <button type="button" class="btn btn-primary btn-block mb-4">Anmelden</button>
+
+                <div class="row mb-4">
+                    <div class="col">
+                        <!-- Simple link -->
+                        <a href="#!">Registrieren</a>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+</form>

@@ -9,7 +9,7 @@ import { UserAccount, Deposit } from '../user/userAccount';
 })
 
 
-export class UserAccountService {
+export class EmployeeService {
 
     private API_URL = "http://localhost:8080/api";
 

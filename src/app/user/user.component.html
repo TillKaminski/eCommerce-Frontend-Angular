@@ -14,55 +14,6 @@
 
 <body>
 
-    <nav class="navbar navbar-expand-lg bg-body-tertiary">
-        <div class="container-fluid">
-            <a class="navbar-brand" href="#">Navbar</a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
-                data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
-                aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                    <div *ngFor="let users of userAccounts">
-                        <li class="nav-item">
-                            <a class="nav-link active" aria-current="page" href="#">{{users?.lastName}}</a>
-                        </li>
-                    </div>
-                    <!--<li class="nav-item">
-            <a class="nav-link" href="#">Link</a>
-          </li>
-          <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-              Dropdown
-            </a>
-            <ul class="dropdown-menu">
-              <li><a class="dropdown-item" href="#">Action</a></li>
-              <li><a class="dropdown-item" href="#">Another action</a></li>
-              <li>
-                <hr class="dropdown-divider">
-              </li>
-              <li><a class="dropdown-item" href="#">Something else here</a></li>
-            </ul>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link disabled" aria-disabled="true">Disabled</a>
-          </li>
-          -->
-                </ul>
-                <div style="text-align: right;">
-                    <form class="d-flex" role="search">
-                        <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-                        <button class="btn btn-outline-success" type="submit">Search</button>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </nav>
-
-
-
-
     <main role="main" class="container">
         <div class="jumbotron text-center">
             <h1>e-Commerce</h1>
@@ -95,19 +46,44 @@
         </div>
     </div>
 
-    <div class="testSort" style="text-align: center;">
-        <div>
-            <h1>Zahlungen geordnet:</h1>
-            <ul>
-                <li *ngFor="let usersSort of userAccountsSorted">
-                    <p>Kontostand: {{usersSort?.balance}} | Name: {{usersSort?.firstName}}, {{usersSort?.lastName}} </p>
-                </li>
-            </ul>
-        </div>
+    <div *ngFor="let users of userAccounts">
+
+        <table class="table">
+            <thead>
+                <tr>
+                    <th scope="col">Nr.</th>
+                    <th scope="col">Beschreibung</th>
+                    <th scope="col">Datum</th>
+                    <th scope="col">Status</th>
+                    <th scope="col">Betrag</th>
+                    <th scope="col">Aktion</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let deposit of users.deposit; let i = index">
+                    <th scope="col">{{i}}</th>
+                    <th scope="col">{{deposit?.description}}</th>
+                    <th scope="col">{{deposit?.date}}</th>
+                    <th *ngIf="deposit?.authorized" style="color: green;" scope="col">erfolgreich</th>
+                    <th *ngIf="!deposit?.authorized" style="color: red;" scope="col">ausstehend</th>
+                    <th scope="col">{{deposit?.depositValue}}</th>
+                    <th scope="col">
+                        <button type="button" class="btn btn-primary">USER</button>
+                    </th>
+                </tr>
+            </tbody>
+        </table>
+        <p style="text-align: center;">
+            ______________________________________
+        </p>
     </div>
 
 
-
+    <div class="input-group">
+        <input type="text" class="form-control" aria-label="Dollar amount (with dot and two decimal places)">
+        <span class="input-group-text">$</span>
+        <span class="input-group-text">0.00</span>
+    </div>
 
 </body>
 

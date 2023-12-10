@@ -1,0 +1,8 @@
+.header {
+    background-color: #333;
+    color: #fff;
+}
+
+.nav-item :hover {
+    color: #333
+}

@@ -13,56 +13,198 @@
 </head>
 
 <body>
+    <h1>Service-Mitarbeiter</h1>
+    <p></p>
+
+    <main role="main" class="container">
+        <div class="jumbotron text-center">
+            <h1>e-Commerce: Service-Mitarbeiter</h1>
+            <p class="lead text-info">Easy Transfer!</p>
+        </div>
+    </main>
+
+    <div>
+        <br />
+        <br />
+        <div class="button-container">
+            <div>
+
+                <ng-container *ngIf="tableState != 'all'">
+                    <button (click)="setTableState('all')" type="button" style="margin-right: 5px;">Alle</button>
+                </ng-container>
+                <ng-container *ngIf="tableState == 'all'">
+                    <button type="button" style="margin-right: 5px;">[Alle]</button>
+                </ng-container>
+                <ng-container *ngIf="tableState != 'done'">
+                    <button (click)="setTableState('done')" type="button"
+                        style="margin-right: 5px;">Durchgeführt</button>
+                </ng-container>
+                <ng-container *ngIf="tableState == 'done'">
+                    <button type="button" style="margin-right: 5px;">[Durchgeführt]</button>
+                </ng-container>
+                <ng-container *ngIf="tableState != 'auth'">
+                    <button (click)="setTableState('auth')" type="button" style="margin-right: 5px;">Authorisierung
+                        austehend</button>
+                </ng-container>
+                <ng-container *ngIf="tableState == 'auth'">
+                    <button type="button" style="margin-right: 5px;">[Authorisierung austehend]</button>
+                </ng-container>
 
 
 
-    <div class="testSort" style="text-align: center;">
+                <!--
+                    
+                <ng-container *ngIf="tableState == 'all'" href="" style="margin-right: 5px;">[Alle]</a>
+                
+                <ng-container *ngIf="tableState != 'done'" href="" style="margin-right: 5px;">Durchgeführt</a>
+                
+                <ng-container *ngIf="tableState == 'done'" href="" style="margin-right: 5px;">[Durchgeführt]</a>
+                
+                <ng-container *ngIf="tableState != 'auth'" href="" style="margin-right: 5px;">Authorisierung austehend</a>
+                
+                <ng-container *ngIf="tableState == 'auth'" href="" style="margin-right: 5px;">[Authorisierung austehend]</a>
+                    -->
+            </div>
+        </div>
+    </div>
+
+    <div *ngIf="tableState == 'all'" id="allUsersSorted">
         <div>
-            <h1>Zahlungen geordnet:</h1>
-            <ul>
-                <li *ngFor="let usersSort of userAccountsSorted">
-                    <p>Kontostand: {{usersSort?.balance}} | Name: {{usersSort?.firstName}}, {{usersSort?.lastName}} </p>
-                </li>
-            </ul>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th scope="col">Nr.</th>
+                        <th scope="col">Name</th>
+                        <th scope="col">Nachname</th>
+                        <th scope="col">Beschreibung</th>
+                        <th scope="col">Datum</th>
+                        <th scope="col">Status</th>
+                        <th scope="col">Betrag</th>
+                        <th scope="col">Aktion</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <ng-container *ngFor="let usersSort of userAccountsSorted">
+                        <ng-container *ngIf="usersSort?.numberTransactions != 0">
+                            <ng-container *ngFor="let deposit of usersSort.deposit; let i = index">
+                                <tr>
+                                    <th scope="col">{{i + 1}}</th>
+                                    <th scope="col">{{usersSort?.firstName}}</th>
+                                    <th scope="col">{{usersSort?.lastName}}</th>
+                                    <th scope="col">{{deposit?.description}}</th>
+                                    <th scope="col">{{deposit?.date}}</th>
+                                    <th *ngIf="deposit?.authorized" style="color: green;" scope="col">erfolgreich</th>
+                                    <th *ngIf="!deposit?.authorized" style="color: red;" scope="col">ausstehend</th>
+                                    <th scope="col">{{formatNumber(deposit.depositValue)}} €</th>
+                                    <th scope="col">
+                                        <button *ngIf="!deposit?.authorized"
+                                            (click)="authorizePayment(usersSort.id, deposit)" type="button"
+                                            class="btn btn-primary">authorisieren</button>
+                                    </th>
+                                </tr>
+                            </ng-container>
+                        </ng-container>
+                    </ng-container>
+                </tbody>
+            </table>
         </div>
     </div>
 
 
-    <div *ngFor="let users of userAccounts">
 
-        <table class="table">
-            <thead>
-                <tr>
-                    <th scope="col">Nr.</th>
-                    <th scope="col">Name</th>
-                    <th scope="col">Nachname</th>
-                    <th scope="col">Beschreibung</th>
-                    <th scope="col">Datum</th>
-                    <th scope="col">Status</th>
-                    <th scope="col">Betrag</th>
-                    <th scope="col">Aktion</th>
-                </tr>
-            </thead>
-            <tbody *ngFor="let usersSort of userAccountsSorted">
-                <tr *ngFor="let deposit of users.deposit; let i = index">
-                    <th scope="col">{{i}}</th>
-                    <th scope="col">{{usersSort?.firstName}}</th>
-                    <th scope="col">{{usersSort?.lastName}}</th>
-                    <th scope="col">{{deposit?.description}}</th>
-                    <th scope="col">{{deposit?.date}}</th>
-                    <th *ngIf="deposit?.authorized" style="color: green;" scope="col">erfolgreich</th>
-                    <th *ngIf="!deposit?.authorized" style="color: red;" scope="col">ausstehend</th>
-                    <th scope="col">{{deposit?.depositValue}} €</th>
-                    <th scope="col">
-                        <button type="button" class="btn btn-primary">USER</button>
-                    </th>
-                </tr>
-            </tbody>
-        </table>
-        <p style="text-align: center;">
-            ______________________________________
-        </p>
+    <div *ngIf="tableState == 'done'" id="doneUsersSorted">
+        <div>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th scope="col">Nr.</th>
+                        <th scope="col">Name</th>
+                        <th scope="col">Nachname</th>
+                        <th scope="col">Beschreibung</th>
+                        <th scope="col">Datum</th>
+                        <th scope="col">Status</th>
+                        <th scope="col">Betrag</th>
+                        <th scope="col">Aktion</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <ng-container *ngFor="let usersSort of userAccountsSorted">
+                        <ng-container *ngIf="usersSort?.numberTransactions != 0">
+                            <ng-container *ngFor="let deposit of usersSort.deposit; let i = index">
+                                <ng-container *ngIf="deposit?.authorized">
+                                    <tr>
+                                        <th scope="col">{{i + 1}}</th>
+                                        <th scope="col">{{usersSort?.firstName}}</th>
+                                        <th scope="col">{{usersSort?.lastName}}</th>
+                                        <th scope="col">{{deposit?.description}}</th>
+                                        <th scope="col">{{deposit?.date}}</th>
+                                        <th *ngIf="deposit?.authorized" style="color: green;" scope="col">erfolgreich
+                                        </th>
+                                        <th *ngIf="!deposit?.authorized" style="color: red;" scope="col">ausstehend</th>
+                                        <th scope="col">{{formatNumber(deposit.depositValue)}} €</th>
+                                        <th scope="col">
+                                            <button *ngIf="!deposit?.authorized"
+                                                (click)="authorizePayment(usersSort.id, deposit)" type="button"
+                                                class="btn btn-primary">authorisieren</button>
+                                        </th>
+                                    </tr>
+                                </ng-container>
+                            </ng-container>
+                        </ng-container>
+                    </ng-container>
+                </tbody>
+            </table>
+        </div>
     </div>
+
+
+    <div *ngIf="tableState == 'auth'" id="authUsersSorted">
+        <div>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th scope="col">Nr.</th>
+                        <th scope="col">Name</th>
+                        <th scope="col">Nachname</th>
+                        <th scope="col">Beschreibung</th>
+                        <th scope="col">Datum</th>
+                        <th scope="col">Status</th>
+                        <th scope="col">Betrag</th>
+                        <th scope="col">Aktion</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <ng-container *ngFor="let usersSort of userAccountsSorted">
+                        <ng-container *ngIf="usersSort?.numberTransactions != 0">
+                            <ng-container *ngFor="let deposit of usersSort.deposit; let i = index">
+                                <ng-container *ngIf="!deposit?.authorized">
+                                    <tr>
+                                        <th scope="col">{{i + 1}}</th>
+                                        <th scope="col">{{usersSort?.firstName}}</th>
+                                        <th scope="col">{{usersSort?.lastName}}</th>
+                                        <th scope="col">{{deposit?.description}}</th>
+                                        <th scope="col">{{deposit?.date}}</th>
+                                        <th *ngIf="deposit?.authorized" style="color: green;" scope="col">erfolgreich
+                                        </th>
+                                        <th *ngIf="!deposit?.authorized" style="color: red;" scope="col">ausstehend</th>
+                                        <th scope="col">{{formatNumber(deposit.depositValue)}} €</th>
+                                        <th scope="col">
+                                            <button *ngIf="!deposit?.authorized"
+                                                (click)="authorizePayment(usersSort.id, deposit)" type="button"
+                                                class="btn btn-primary">authorisieren</button>
+                                        </th>
+                                    </tr>
+                                </ng-container>
+                            </ng-container>
+                        </ng-container>
+                    </ng-container>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+
+
 
 
 

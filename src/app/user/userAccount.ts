@@ -4,6 +4,7 @@ export interface UserAccount {
     lastName: string,
     eMail: string,
     balance: number,
+    numberTransactions: number,
     userRole: string,
     deposit: Deposit[]
 

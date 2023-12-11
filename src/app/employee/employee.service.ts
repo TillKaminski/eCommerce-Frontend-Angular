@@ -33,5 +33,9 @@ export class EmployeeService {
         return this.http.get<Deposit[]>(`${this.API_URL}/${userId}/paymentssorted`)
     }
 
+    public resubmitPayment(userId: number, deposit: Deposit): Observable<boolean> {
+        return this.http.put<boolean>(`${this.API_URL}/pay/${userId}/resubpayment`, deposit)
+    }
+
 
 }

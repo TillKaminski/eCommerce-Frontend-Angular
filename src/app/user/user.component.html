@@ -14,77 +14,86 @@
 
 <body>
 
-    <main role="main" class="container">
-        <div class="jumbotron text-center">
-            <h1>e-Commerce</h1>
-            <p class="lead text-info">Easy Transfer!</p>
-        </div>
-    </main>
-
-    <div class="testList" style="text-align: center;">
-        <div *ngFor="let users of userAccounts">
-            <div>
-                <h1><b>User</b></h1>
-                <p>First Name: {{users?.firstName}}</p>
-                <p>Last Name: {{users?.lastName}}</p>
-                <p>__________________________________</p>
-                <h2><i>Payments:</i></h2>
-                <ul>
-                    <li *ngFor="let deposit of users.deposit">
-                        <p>Payment: {{deposit?.depositValue}} €</p>
-                        <p> Date: {{deposit?.date}}</p>
-                        <div *ngIf="deposit?.authorized" style="color: green;">
-                            <p><i>erfolgreich</i></p>
-                        </div>
-                        <div *ngIf="!deposit?.authorized" style="color: red;">
-                            <p><i>ausstehend</i></p>
-                        </div>
-                    </li>
-                </ul>
-                <p>__________________________________</p>
+    <div>
+        <p>Nuter wechseln:</p>
+        <div class="button-container">
+            <div *ngFor="let user of userAccountsSorted">
+                <a (click)="changeUser(user.id)" href="" style="margin-right: 5px;">[{{user.lastName}} ID:
+                    {{user.id}}]</a>
             </div>
         </div>
     </div>
 
-    <div *ngFor="let users of userAccounts">
 
-        <table class="table">
-            <thead>
-                <tr>
-                    <th scope="col">Nr.</th>
-                    <th scope="col">Beschreibung</th>
-                    <th scope="col">Datum</th>
-                    <th scope="col">Status</th>
-                    <th scope="col">Betrag</th>
-                    <th scope="col">Aktion</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr *ngFor="let deposit of users.deposit; let i = index">
-                    <th scope="col">{{i}}</th>
-                    <th scope="col">{{deposit?.description}}</th>
-                    <th scope="col">{{deposit?.date}}</th>
-                    <th *ngIf="deposit?.authorized" style="color: green;" scope="col">erfolgreich</th>
-                    <th *ngIf="!deposit?.authorized" style="color: red;" scope="col">ausstehend</th>
-                    <th scope="col">{{deposit?.depositValue}}</th>
-                    <th scope="col">
-                        <button type="button" class="btn btn-primary">USER</button>
-                    </th>
-                </tr>
-            </tbody>
-        </table>
-        <p style="text-align: center;">
-            ______________________________________
-        </p>
+    <main role="main" class="container">
+        <div class="jumbotron text-center">
+            <h1>e-Commerce: Benutzer</h1>
+            <p class="lead text-info">Easy Transfer!</p>
+        </div>
+    </main>
+
+    <div class="userInput">
+        <div>
+            <div>
+                <h2>Hallo {{currentUser.firstName}}, {{currentUser.lastName}}!</h2>
+                <br>
+                <br>
+            </div>
+        </div>
     </div>
 
-
-    <div class="input-group">
-        <input type="text" class="form-control" aria-label="Dollar amount (with dot and two decimal places)">
-        <span class="input-group-text">$</span>
-        <span class="input-group-text">0.00</span>
+    <div>
+        <div class="userInput">
+            <input #userPaymentValue type="text" placeholder="Zahlungsbetrag eingeben" style="margin-right: 20px;">
+            <button type="button" class="btn btn-primary" style="margin-right: 20px;">Einzahlen</button>
+            <button type="button" class="btn btn-primary" style="margin-right: 20px;">Abheben</button>
+        </div>
     </div>
 
+    <div>
+        <div>
+            <h1>Zahlungen:</h1>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th scope="col">Nr.</th>
+                        <th scope="col">Beschreibung</th>
+                        <th scope="col">Datum</th>
+                        <th scope="col">Status</th>
+                        <th scope="col">Betrag</th>
+                        <th scope="col">Aktion</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let deposit of currentUser.deposit; let i = index">
+                        <th scope="col">{{i + 1}}</th>
+                        <th scope="col">{{deposit?.description}}</th>
+                        <th scope="col">{{deposit?.date}}</th>
+                        <th *ngIf="deposit?.authorized" style="color: green;" scope="col">erfolgreich</th>
+                        <th *ngIf="!deposit?.authorized" style="color: red;" scope="col">ausstehend</th>
+                        <th scope="col">{{formatNumber(deposit.depositValue)}} €</th>
+                        <th scope="col">
+                            <button *ngIf="!deposit?.authorized" type="button" class="btn btn-primary">Details</button>
+                        </th>
+                    </tr>
+                    <tr>
+                        <th scope="col"></th>
+                        <th scope="col"></th>
+                        <th scope="col"></th>
+                        <th scope="col"><i>Kontostand:</i></th>
+                        <th *ngIf="currentUser.balance >= 0" style="color: green;" scope="col">
+                            <i>{{formatNumber(currentUser.balance)}} €</i>
+                        </th>
+                        <th *ngIf="currentUser.balance < 0" style="color: red;" scope="col">
+                            <i>{{formatNumber(currentUser.balance)}}
+                                €</i>
+                        </th>
+                        <th scope="col"></th>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
 </body>
 
 

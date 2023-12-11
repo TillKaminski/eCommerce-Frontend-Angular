@@ -1,6 +1,12 @@
 .header {
     background-color: #333;
-    color: #fff;
+    color: #ffffff2d;
+
+    left: 0;
+    width: 100%;
+    position: relative;
+
+
 }
 
 .nav-item :hover {

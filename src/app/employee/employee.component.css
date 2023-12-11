@@ -1,0 +1,7 @@
+.button-container {
+    display: flex;
+}
+
+.table td {
+    padding: 8px;
+}

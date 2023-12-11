@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { UserAccountService } from './user-account.service';
 import { UserAccount, Deposit } from './userAccount';
 import { HttpErrorResponse } from '@angular/common/http';
+import { AppComponent } from '../app.component';
+
 @Component({
   selector: 'app-user',
   templateUrl: './user.component.html',
@@ -13,6 +15,7 @@ export class UserComponent implements OnInit {
   userAccountsSorted: UserAccount[] = [];
   deposits: Deposit[] = [];
   depositsSorted: Deposit[] = [];
+  currentUser!: UserAccount;
 
 
   constructor(private userAccountService: UserAccountService) { }
@@ -21,12 +24,29 @@ export class UserComponent implements OnInit {
     // this.matchDeposit(); unsortiert
     this.getUsersSorted();
     this.matchDepositSorted();
+    //this.changeUser(1);
   }
+
+  formatNumber(resNumber: number): String {
+    return (resNumber / 100).toFixed(2); //Nachkomma darstellen
+  }
+
+  changeUser(userId: number): void {
+    //console.log(userId);
+    for (const user of this.userAccounts) {
+      //console.log(user.id);
+      if (user.id == userId) {
+        this.currentUser = user;
+      }
+    }
+  }
+
 
   getUsers(): void {
     this.userAccountService.getUsers().subscribe(
       (response: UserAccount[]) => {
         this.userAccounts = response;
+        this.changeUser(1); // unsauber
       },
       (error: HttpErrorResponse) => {
         console.log(error.message);

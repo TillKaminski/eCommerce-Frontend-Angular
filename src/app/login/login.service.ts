@@ -9,29 +9,28 @@ import { UserAccount, Deposit } from '../user/userAccount';
 })
 
 
-export class UserAccountService {
+export class RegService {
 
-    private API_URL = "http://localhost:8080/api";
+    private API_URL = "http://localhost:8080/api/user";
 
     constructor(private http: HttpClient) { }
 
     //ngOnInit(): void { }
 
-    public getUsers(): Observable<UserAccount[]> {
-        return this.http.get<UserAccount[]>(`${this.API_URL}/all`);
+    public loginUser(userId: number, userPassword: String): Observable<String> {
+        return this.http.post<String>(`${this.API_URL}/login/${userId}`, userPassword);
     }
 
-    public getUsersSorted(): Observable<UserAccount[]> {
-        return this.http.get<UserAccount[]>(`${this.API_URL}/allsorted`);
+    public getUser(userEmail: String): Observable<UserAccount> {
+        return this.http.post<UserAccount>(`${this.API_URL}/get`, userEmail);
     }
 
-    public getPaymentsByUser(userId: number): Observable<Deposit[]> {
-        return this.http.get<Deposit[]>(`${this.API_URL}/${userId}/payments`)
+    public registerUser(user: UserAccount): Observable<UserAccount> {
+        return this.http.post<UserAccount>(`${this.API_URL}/register`, user);
     }
 
-    public getPaymentsByUserSorted(userId: number): Observable<Deposit[]> {
-        return this.http.get<Deposit[]>(`${this.API_URL}/${userId}/paymentssorted`)
-    }
+
+
 
 
 }

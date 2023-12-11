@@ -1,19 +1,15 @@
-.center-vertical {
-    margin: 0;
-    position: absolute;
-    top: 50%;
-    -ms-transform: translateY(-50%);
-    transform: translateY(-50%);
-}
+.centered {
 
-.center-horizontal {
-    margin: 0;
-    position: absolute;
+    position: relative;
     top: 50%;
     left: 50%;
-    -ms-transform: translate(-50%, -50%);
-    transform: translate(-50%, -50%);
+    width: 300px;
+    height: 100px;
+    margin-top: -50px;
+    margin-left: -150px;
+
 }
+
 
 .centered-input {
     width: 250px;

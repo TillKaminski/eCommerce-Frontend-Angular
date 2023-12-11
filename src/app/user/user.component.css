@@ -1,0 +1,19 @@
+.button-container {
+    display: flex;
+}
+
+.button-container button {
+    display: flex;
+    flex-direction: column;
+    margin: 5px;
+}
+
+.userInput {
+    text-align: center;
+    margin: 10px;
+    margin-right: 20px;
+}
+
+.table td {
+    padding: 8px;
+}

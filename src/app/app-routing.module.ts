@@ -8,7 +8,8 @@ import { EmployeeComponent } from './employee/employee.component';
 
 
 const routes: Routes = [
-  { path: '', redirectTo: '/login', pathMatch: 'full' },
+  { path: '', redirectTo: '/user', pathMatch: 'full' },
+  // login TODO
   { path: 'login', component: LoginComponent },
   { path: 'user', component: UserComponent },
   { path: 'employee', component: EmployeeComponent }

@@ -30,11 +30,23 @@ export class EmployeeService {
     }
 
     public getPaymentsByUserSorted(userId: number): Observable<Deposit[]> {
-        return this.http.get<Deposit[]>(`${this.API_URL}/${userId}/paymentssorted`)
+        return this.http.get<Deposit[]>(`${this.API_URL}/${userId}/paymentssorted/true`)
     }
 
     public resubmitPayment(userId: number, deposit: Deposit): Observable<boolean> {
         return this.http.put<boolean>(`${this.API_URL}/pay/${userId}/resubpayment`, deposit)
+    }
+
+    public getPaymentsPeriod(dateBegin: String, dateEnd: String): Observable<Deposit[]> {
+        return this.http.get<Deposit[]>(`${this.API_URL}/payments/${dateBegin}/${dateEnd}`)
+    }
+
+    public getSumPeriod(dateBegin: String, dateEnd: String): Observable<number> {
+        return this.http.get<number>(`${this.API_URL}/payments/sum/${dateBegin}/${dateEnd}`)
+    }
+
+    public getSumMissingPeriod(dateBegin: String, dateEnd: String): Observable<number> {
+        return this.http.get<number>(`${this.API_URL}/payments/summissing/${dateBegin}/${dateEnd}`)
     }
 
 

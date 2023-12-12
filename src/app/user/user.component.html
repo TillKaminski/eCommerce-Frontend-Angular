@@ -15,11 +15,10 @@
 <body>
 
     <div>
-        <p>Nuter wechseln:</p>
         <div class="button-container">
             <div *ngFor="let user of userAccountsSorted">
-                <a (click)="changeUser(user.id)" href="" style="margin-right: 5px;">[{{user.lastName}} ID:
-                    {{user.id}}]</a>
+                <button (click)="changeUser(user.id)" class="btn btn-primary" type="button"
+                    style="margin: 5px">{{user.lastName}}</button>
             </div>
         </div>
     </div>
@@ -28,7 +27,7 @@
     <main role="main" class="container">
         <div class="jumbotron text-center">
             <h1>e-Commerce: Benutzer</h1>
-            <p class="lead text-info">Easy Transfer!</p>
+            <p class="lead text-info">Transfer</p>
         </div>
     </main>
 
@@ -43,16 +42,21 @@
     </div>
 
     <div>
+        <h3 style="text-align: center;">Zahlungen und Abhebungen vornehmen:</h3>
+        <br>
         <div class="userInput">
-            <input #userPaymentValue type="text" placeholder="Zahlungsbetrag eingeben" style="margin-right: 20px;">
-            <button type="button" class="btn btn-primary" style="margin-right: 20px;">Einzahlen</button>
-            <button type="button" class="btn btn-primary" style="margin-right: 20px;">Abheben</button>
+            <input #userPayment type="text" placeholder="Zahlungsbetrag eingeben" style="margin-right: 20px;">
+            <input #userDesciption type="text" placeholder="Beschreibung (optional)" style="margin-right: 20px;">
+            <button (click)="sendPayment(userPayment.value, userDesciption.value, false)" type="button"
+                class="btn btn-primary" style="margin-right: 20px;">Einzahlen</button>
+            <button (click)="sendPayment(userPayment.value, userDesciption.value, true)" type="button"
+                class="btn btn-primary" style="margin-right: 20px;">Abheben</button>
         </div>
     </div>
 
     <div>
         <div>
-            <h1>Zahlungen:</h1>
+            <h3>Zahlungen:</h3>
             <table class="table">
                 <thead>
                     <tr>
@@ -61,7 +65,7 @@
                         <th scope="col">Datum</th>
                         <th scope="col">Status</th>
                         <th scope="col">Betrag</th>
-                        <th scope="col">Aktion</th>
+                        <!-- <th scope="col">Aktion</th>-->
                     </tr>
                 </thead>
                 <tbody>
@@ -72,9 +76,9 @@
                         <th *ngIf="deposit?.authorized" style="color: green;" scope="col">erfolgreich</th>
                         <th *ngIf="!deposit?.authorized" style="color: red;" scope="col">ausstehend</th>
                         <th scope="col">{{formatNumber(deposit.depositValue)}} €</th>
-                        <th scope="col">
+                        <!-- <th scope="col">
                             <button *ngIf="!deposit?.authorized" type="button" class="btn btn-primary">Details</button>
-                        </th>
+                        </th>-->
                     </tr>
                     <tr>
                         <th scope="col"></th>

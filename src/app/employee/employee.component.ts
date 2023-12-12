@@ -1,36 +1,44 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { EmployeeService } from './employee.service';
 import { UserAccount, Deposit } from '../user/userAccount';
 import { HttpErrorResponse } from '@angular/common/http';
-import { ChangeDetectorRef } from '@angular/core';
+
 @Component({
   selector: 'app-employee',
   templateUrl: './employee.component.html',
   styleUrls: ['./employee.component.css']
 })
+
+
 export class EmployeeComponent {
+
   title = 'eCommerce-Frontend';
   userAccounts: UserAccount[] = [];
   userAccountsSorted: UserAccount[] = [];
   deposits: Deposit[] = [];
   depositsSorted: Deposit[] = [];
 
-  tableState!: String;
+  depositSum!: number;
+  depositSumMissing!: number;
+
+  depositsPeriod: Deposit[] = [];
+
+  tableState!: string;
 
 
-  constructor(private employeeService: EmployeeService, private changeDetectorRef: ChangeDetectorRef) { }
+  constructor(private employeeService: EmployeeService, private cdr: ChangeDetectorRef) { }
   ngOnInit() {
     this.getUsers();
     // this.matchDeposit(); unsortiert
     this.getUsersSorted();
     this.matchDepositSorted();
+    //this.getPaymentsPeriod("2023-02-02", "2023-05-05");
     this.tableState = "all"
   }
 
   formatNumber(resNumber: number): String {
     return (resNumber / 100).toFixed(2); //Nachkomma darstellen
   }
-
 
   setTableState(tableState: String): void {
     switch (tableState) {
@@ -46,24 +54,69 @@ export class EmployeeComponent {
       case "period":
         this.tableState = "period";
         break;
+      case "sum":
+        this.tableState = "sum";
+        break;
       default:
         this.tableState = "all";
     }
-
-
   }
 
 
-  authorizePayment(userId: number, deposit: Deposit): void {
-    this.employeeService.resubmitPayment(userId, deposit).subscribe(
-      (response: boolean) => {
-        console.log("Authorisierung erfolgreich!");
-        this.changeDetectorRef.detectChanges();
+  getPaymentsPeriod(dateBegin: String, dateEnd: String): void {
+    if (dateBegin.length != 10 || dateEnd.length != 10) {
+      dateBegin = "2000-01-01";
+      dateEnd = "2030-01-01";
+    }
+
+    this.employeeService.getPaymentsPeriod(dateBegin, dateEnd).subscribe(
+      (response: Deposit[]) => {
+        this.depositsPeriod = response;
       },
       (error: HttpErrorResponse) => {
         console.log(error.message);
       }
     )
+
+    this.employeeService.getSumPeriod(dateBegin, dateEnd).subscribe(
+      (response: number) => {
+        this.depositSum = response;
+      },
+      (error: HttpErrorResponse) => {
+        console.log(error.message);
+      }
+    )
+
+    this.employeeService.getSumMissingPeriod(dateBegin, dateEnd).subscribe(
+      (response: number) => {
+        this.depositSumMissing = response;
+        this.setTableState("period");
+      },
+      (error: HttpErrorResponse) => {
+        console.log(error.message);
+      }
+    )
+
+
+  }
+
+  authorizePayment(userId: number, deposit: Deposit): void {
+    this.employeeService.resubmitPayment(userId, deposit).subscribe(
+      (response: boolean) => {
+        console.log("Authorisierung erfolgreich!");
+        //this.matchDepositSorted();
+        //this.changeDetectorRef.detectChanges();
+      },
+      (error: HttpErrorResponse) => {
+        console.log(error.message);
+      }
+    )
+
+    this.setTableState("auth");
+    this.cdr.detectChanges();
+
+
+
   }
 
 
@@ -76,7 +129,7 @@ export class EmployeeComponent {
         console.log(error.message);
       }
     )
-
+    this.getPaymentsPeriod("", "");
     //throw new Error('Method not implemented.');
   }
 
@@ -128,4 +181,6 @@ export class EmployeeComponent {
       userAccount.deposit = this.deposits;
     }
   }
+
+
 }

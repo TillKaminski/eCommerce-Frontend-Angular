@@ -33,5 +33,9 @@ export class UserAccountService {
         return this.http.get<Deposit[]>(`${this.API_URL}/${userId}/paymentssorted`)
     }
 
+    public sendPayment(userId: number, deposit: Deposit): Observable<boolean> {
+        return this.http.post<boolean>(`${this.API_URL}/pay/${userId}/addpayment`, deposit)
+    }
+
 
 }

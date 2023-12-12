@@ -32,13 +32,50 @@ export class UserComponent implements OnInit {
   }
 
   changeUser(userId: number): void {
-    //console.log(userId);
     for (const user of this.userAccounts) {
-      //console.log(user.id);
       if (user.id == userId) {
         this.currentUser = user;
       }
     }
+  }
+
+
+  sendPayment(paymentValue: string, description: string, sign: boolean): void {
+
+    if (paymentValue.includes(".") || paymentValue.includes(",")) {
+      paymentValue = paymentValue.replace(".", "").replace(",", "");
+    } else {
+      paymentValue = paymentValue + "00"
+    }
+
+    console.log(paymentValue);
+
+    let convNumber: number = Number(paymentValue);
+
+    if (sign) {
+      convNumber = convNumber * (-1);
+    }
+
+    let nowDate = new Date();
+    let deposit: Deposit = {
+      id: 0,
+      depositValue: convNumber,
+      description: description,
+      authorized: false,
+      date: nowDate
+    }
+
+    this.userAccountService.sendPayment(this.currentUser.id, deposit).subscribe(
+      (response: boolean) => {
+        console.log("Payment erfolgreich!" + response);
+      },
+      (error: HttpErrorResponse) => {
+        console.log(error.message);
+      }
+    )
+
+    //this.getUsers();
+
   }
 
 

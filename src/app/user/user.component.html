@@ -16,7 +16,7 @@
 
     <div>
         <div class="button-container">
-            <div *ngFor="let user of userAccountsSorted">
+            <div *ngFor="let user of userAccounts">
                 <button (click)="changeUser(user.id)" class="btn btn-primary" type="button"
                     style="margin: 5px">{{user.lastName}}</button>
             </div>
@@ -74,7 +74,7 @@
                         <th scope="col">{{deposit?.description}}</th>
                         <th scope="col">{{deposit?.date}}</th>
                         <th *ngIf="deposit?.authorized" style="color: green;" scope="col">erfolgreich</th>
-                        <th *ngIf="!deposit?.authorized" style="color: red;" scope="col">ausstehend</th>
+                        <th *ngIf="!deposit?.authorized" style="color: red;" scope="col">in Prüfung</th>
                         <th scope="col">{{formatNumber(deposit.depositValue)}} €</th>
                         <!-- <th scope="col">
                             <button *ngIf="!deposit?.authorized" type="button" class="btn btn-primary">Details</button>

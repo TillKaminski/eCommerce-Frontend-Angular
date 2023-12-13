@@ -26,42 +26,12 @@ export class LoginComponent {
     console.log(userMail);
     console.log(userPassword);
 
+    this.router.navigate(['/user']);
 
     /*
-    const loginData: LoginData = {
-      email: userMail,
-      password: userPassword
-    };
-*/
-
-    console.log("Login");
-    /*
-        this.regService.loginUser(userMail, userPassword).subscribe(
-          (response: number) => {
-            this.userId = response;
-            console.log(1);
-            if (this.userId == undefined) {
-              this.userId = 1;
-            }
-            this.router.navigate(['/user', { tempUserId: this.userId }]);
-          },
-          (error: HttpErrorResponse) => {
-            console.log(2);
-            console.log(error.message);
-          }
-        )
+      LOGIN
     */
 
-    this.userId = 1;
-    this.router.navigate(['/user', { tempUserId: this.userId }]);
-    // Switch Case
-    //if (this.userRole == "USER") {
-    //this.router.navigate(['/user', { tempUserId: this.userId }]);
-    // }
-
-    // if (this.userRole == "EMPLOYEE") {
-    //  this.router.navigate(['/employee']);
-    // }
   }
 
   onRegister(regForm: NgForm): void {

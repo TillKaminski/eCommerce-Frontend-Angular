@@ -56,7 +56,9 @@
                         placeholder="Passwort">
                 </div>
                 <div class="centered" style="text-align: center;">
-                    <button (click)="onLogin(loginForm)" type="button" [disabled]="loginForm.invalid" type="submit"
+                    <button type="button" disabled=true class="btn btn-primary btn-block mb-4">Anmelden</button>
+                    <button (click)="onLogin(loginForm)" style="display: none;" type="button"
+                        [disabled]="loginForm.invalid" type="submit"
                         class="btn btn-primary btn-block mb-4">Anmelden</button>
                     <div class="row mb-4">
                         <div class="col">

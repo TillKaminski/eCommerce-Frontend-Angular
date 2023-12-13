@@ -2,7 +2,6 @@ import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { EmployeeService } from './employee.service';
 import { UserAccount, Deposit } from '../user/userAccount';
 import { HttpErrorResponse } from '@angular/common/http';
-import { DatePeriod } from './employee.date-period';
 
 @Component({
   selector: 'app-employee',
@@ -23,12 +22,14 @@ export class EmployeeComponent {
 
   tableState!: string;
 
-  constructor(private employeeService: EmployeeService, private cdr: ChangeDetectorRef) { }
+  constructor(private employeeService: EmployeeService) { }
   ngOnInit() {
-    this.getUsersSorted();
-    this.matchDepositSorted();
-    this.getPaymentsPeriod("", ""); // zweite Mal Erhalt Zahlungen, aber sortiert
+    //this.getUsersSorted();
+    //this.matchDepositSorted();
+    //this.getPaymentsPeriod('', ''); // zweite Mal Erhalt Zahlungen, aber sortiert
     this.tableState = "all";
+    this.getData();
+
   }
 
   formatNumber(resNumber: number): String {
@@ -60,13 +61,13 @@ export class EmployeeComponent {
   getData(): void {
     this.getUsersSorted();
     this.matchDepositSorted();
-    this.getPaymentsPeriod('', '');
+    this.getPaymentsPeriod("", "");
   }
 
   getPaymentsPeriod(dateBegin: string, dateEnd: string): void {
     if (dateBegin.length != 10 || dateEnd.length != 10) {
       dateBegin = '2000-01-01';
-      dateEnd = '2050-01-01';
+      dateEnd = '2050-01-01'; //unsauber
     }
 
     /*
@@ -110,6 +111,7 @@ export class EmployeeComponent {
       (response: boolean) => {
         console.log("Authorisierung erfolgreich!");
         this.getData();
+        this.setTableState("auth");
       },
       (error: HttpErrorResponse) => {
         console.log(error.message);

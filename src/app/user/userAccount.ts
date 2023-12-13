@@ -2,7 +2,7 @@ export interface UserAccount {
     id: number,
     firstName: string,
     lastName: string,
-    eMail: string,
+    email: string,
     balance: number,
     numberTransactions: number,
     userRole: string,

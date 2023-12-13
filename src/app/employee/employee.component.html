@@ -14,7 +14,6 @@
 
 <body>
 
-
     <main role="main" class="container">
         <div class="jumbotron text-center">
             <h1>e-Commerce: Service-Mitarbeiter</h1>
@@ -35,7 +34,6 @@
             <div style="color: red; padding: 10px;"> <b> AUSSTEHEND: {{formatNumber(depositSumMissing)}} €</b></div>
         </div>
     </div>
-
 
     <div>
         <br />
@@ -116,8 +114,6 @@
         </div>
     </div>
 
-
-
     <div *ngIf="tableState == 'done'" id="doneUsersSorted">
         <div>
             <table class="table">
@@ -162,7 +158,6 @@
             </table>
         </div>
     </div>
-
 
     <div *ngIf="tableState == 'auth'" id="authUsersSorted">
         <div>
@@ -210,8 +205,6 @@
             </table>
         </div>
     </div>
-
-
 
     <div *ngIf="tableState == 'period'" id="periodUsersSorted">
         <div>
@@ -262,8 +255,6 @@
         </div>
     </div>
 
-
-
     <div *ngIf="tableState == 'sum'" id="sumUsersSorted">
         <div>
             <table class="table">
@@ -293,10 +284,5 @@
             </table>
         </div>
     </div>
-
-
-
-
-
 
 </body>

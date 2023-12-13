@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http'
 import { Observable } from 'rxjs';
 import { UserAccount, Deposit } from '../user/userAccount';
+import { LoginData } from './login-data';
 
 
 @Injectable({
@@ -17,12 +18,12 @@ export class RegService {
 
     //ngOnInit(): void { }
 
-    public loginUser(userId: number, userPassword: String): Observable<String> {
-        return this.http.post<String>(`${this.API_URL}/login/${userId}`, userPassword);
+    public loginUser(userMail: String, userPassword: String): Observable<number> {
+        return this.http.post<number>(`${this.API_URL}/login/${userMail}`, userPassword);
     }
 
-    public getUser(userEmail: String): Observable<UserAccount> {
-        return this.http.post<UserAccount>(`${this.API_URL}/get`, userEmail);
+    public getUser(loginDara: LoginData): Observable<UserAccount> {
+        return this.http.post<UserAccount>(`${this.API_URL}/get`, loginDara);
     }
 
     public registerUser(user: UserAccount): Observable<UserAccount> {

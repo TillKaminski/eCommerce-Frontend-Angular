@@ -44,38 +44,86 @@
         <br>
     </main>
 
-    <form>
-        <div class="centered">
-            <div>
-                <input #userName type="text" class="centered-input" placeholder="Nutzername(Email Addresse)">
-            </div>
-            <div>
-                <input #userPassword type="password" class="centered-input" placeholder="Passwort">
-            </div>
-
-            <div class="centered-input" style="text-align: center;">
-                <!-- Submit button -->
-                <button (click)="userLogin(userName.value, userPassword.value)" type="button"
-                    class="btn btn-primary btn-block mb-4">Anmelden</button>
-
-                <div class="row mb-4">
-                    <div class="col">
-                        <!-- Simple link -->
-                        <a href="#!">Registrieren</a>
+    <div class="container" id="main-container">
+        <form #loginForm="ngForm" (ngSubmit)="onLogin(loginForm)">
+            <div class="centered">
+                <div style="padding: 5px;">
+                    <input ngModel name="userMail" class="form-control" id="userMail" type="text"
+                        placeholder="Nutzername(Email Addresse)">
+                </div>
+                <div style="padding: 5px;">
+                    <input ngModel name="userPassword" class="form-control" id="userPassword" type="password"
+                        placeholder="Passwort">
+                </div>
+                <div class="centered" style="text-align: center;">
+                    <button (click)="onLogin(loginForm)" type="button" [disabled]="loginForm.invalid" type="submit"
+                        class="btn btn-primary btn-block mb-4">Anmelden</button>
+                    <div class="row mb-4">
+                        <div class="col">
+                            <a (click)="onRegModal(null)" class="regLink">Registrieren</a>
+                        </div>
                     </div>
                 </div>
             </div>
+        </form>
+    </div>
+
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+
+
+    <!-- Register Modal -->
+    <div class="modal fade" id="regModal" tabindex="-1" role="dialog" aria-labelledby="regModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="regModalLabel">Nutzer-Registrierung</h5>
+                    <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form #regForm="ngForm" (ngSubmit)="onRegister(regForm)">
+                        <div class="form-group">
+                            <label for="firstName">Name</label>
+                            <input type="text" ngModel name="firstName" class="form-control" id="firstName"
+                                placeholder="Name" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="lastName">Nachname</label>
+                            <input type="text" ngModel name="lastName" class="form-control" id="lastName"
+                                placeholder="Nachname" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="email">E-Mailadresse</label>
+                            <input type="email" ngModel name="email" class="form-control" id="email"
+                                placeholder="E-Mailadresse" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="password">Passwort</label>
+                            <input type="password" ngModel name="password" class="form-control" id="password"
+                                placeholder="Passwort" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="balance">Startkapital</label>
+                            <input type="text" ngModel name="balance" class="form-control" id="balance"
+                                placeholder="z.B. 100 €">
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" id="register-form" class="btn btn-secondary"
+                                data-bs-dismiss="modal">Abbrechen</button>
+                            <button [disabled]="regForm.invalid" type="submit" data-bs-dismiss="modal"
+                                class="btn btn-primary">Registrieren</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
         </div>
-
-    </form>
-
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
-
-
+    </div>
 
 </body>

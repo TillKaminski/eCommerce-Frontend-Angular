@@ -2,6 +2,7 @@ import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { EmployeeService } from './employee.service';
 import { UserAccount, Deposit } from '../user/userAccount';
 import { HttpErrorResponse } from '@angular/common/http';
+import { DatePeriod } from './employee.date-period';
 
 @Component({
   selector: 'app-employee',
@@ -13,27 +14,20 @@ import { HttpErrorResponse } from '@angular/common/http';
 export class EmployeeComponent {
 
   title = 'eCommerce-Frontend';
-  //userAccounts: UserAccount[] = [];
   userAccountsSorted: UserAccount[] = [];
-  //deposits: Deposit[] = [];
   depositsSorted: Deposit[] = [];
 
   depositSum!: number;
   depositSumMissing!: number;
-
   depositsPeriod: Deposit[] = [];
 
   tableState!: string;
 
-
   constructor(private employeeService: EmployeeService, private cdr: ChangeDetectorRef) { }
   ngOnInit() {
-    // this.getUsers();
-    // this.matchDeposit(); unsortiert
     this.getUsersSorted();
     this.matchDepositSorted();
-    this.getPaymentsPeriod("", "");
-    //this.getPaymentsPeriod("2023-02-02", "2023-05-05");
+    this.getPaymentsPeriod("", ""); // zweite Mal Erhalt Zahlungen, aber sortiert
     this.tableState = "all";
   }
 
@@ -63,19 +57,24 @@ export class EmployeeComponent {
     }
   }
 
-
   getData(): void {
     this.getUsersSorted();
     this.matchDepositSorted();
-    this.getPaymentsPeriod("", "");
+    this.getPaymentsPeriod('', '');
   }
 
-
-  getPaymentsPeriod(dateBegin: String, dateEnd: String): void {
+  getPaymentsPeriod(dateBegin: string, dateEnd: string): void {
     if (dateBegin.length != 10 || dateEnd.length != 10) {
-      dateBegin = "1000-01-01";
-      dateEnd = "3000-01-01";
+      dateBegin = '2000-01-01';
+      dateEnd = '2050-01-01';
     }
+
+    /*
+    const datePeriod: DatePeriod = {
+      dateBegin: dateBegin,
+      dateEnd: dateEnd
+    }
+    */
 
     this.employeeService.getPaymentsPeriod(dateBegin, dateEnd).subscribe(
       (response: Deposit[]) => {
@@ -104,8 +103,6 @@ export class EmployeeComponent {
         console.log(error.message);
       }
     )
-
-
   }
 
   authorizePayment(userId: number, deposit: Deposit): void {
@@ -120,20 +117,6 @@ export class EmployeeComponent {
     )
   }
 
-  /*
-    getUsers(): void {
-      this.employeeService.getUsers().subscribe(
-        (response: UserAccount[]) => {
-          this.userAccounts = response;
-        },
-        (error: HttpErrorResponse) => {
-          console.log(error.message);
-        }
-      )
-      this.getPaymentsPeriod("", "");
-      //throw new Error('Method not implemented.');
-    }
-  */
   getUsersSorted(): void {
     this.employeeService.getUsersSorted().subscribe(
       (response: UserAccount[]) => {
@@ -144,20 +127,6 @@ export class EmployeeComponent {
       }
     )
   }
-
-  /*
-  getDepositsByUser(userId: number): void {
-    this.employeeService.getPaymentsByUser(userId).subscribe(
-      (response: Deposit[]) => {
-        this.deposits = response;
-      },
-      (error: HttpErrorResponse) => {
-        console.log(error.message);
-      }
-
-    )
-  }
-  */
 
   getDepositsByUserSorted(userId: number): void {
     this.employeeService.getPaymentsByUserSorted(userId).subscribe(
@@ -171,21 +140,10 @@ export class EmployeeComponent {
     )
   }
 
-  /*
-  matchDeposit(): void {
-    for (let userAccount of this.userAccounts) {
-      this.getDepositsByUser(userAccount.id);
-      userAccount.deposit = this.deposits;
-    }
-  }
-  */
-
   matchDepositSorted(): void {
     for (let userAccount of this.userAccountsSorted) {
       this.getDepositsByUserSorted(userAccount.id);
       userAccount.deposit = this.depositsSorted;
     }
   }
-
-
 }

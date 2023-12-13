@@ -23,7 +23,6 @@
         </div>
     </div>
 
-
     <main role="main" class="container">
         <div class="jumbotron text-center">
             <h1>e-Commerce: Benutzer</h1>
@@ -65,7 +64,6 @@
                         <th scope="col">Datum</th>
                         <th scope="col">Status</th>
                         <th scope="col">Betrag</th>
-                        <!-- <th scope="col">Aktion</th>-->
                     </tr>
                 </thead>
                 <tbody>
@@ -76,9 +74,6 @@
                         <th *ngIf="deposit?.authorized" style="color: green;" scope="col">erfolgreich</th>
                         <th *ngIf="!deposit?.authorized" style="color: red;" scope="col">in Prüfung</th>
                         <th scope="col">{{formatNumber(deposit.depositValue)}} €</th>
-                        <!-- <th scope="col">
-                            <button *ngIf="!deposit?.authorized" type="button" class="btn btn-primary">Details</button>
-                        </th>-->
                     </tr>
                     <tr>
                         <th scope="col"></th>
@@ -99,6 +94,5 @@
         </div>
     </div>
 </body>
-
 
 </html>

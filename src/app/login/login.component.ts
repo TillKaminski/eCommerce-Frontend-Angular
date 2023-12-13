@@ -3,6 +3,8 @@ import { Router } from '@angular/router';
 import { UserAccount } from '../user/userAccount';
 import { RegService } from './login.service';
 import { HttpErrorResponse } from '@angular/common/http';
+import { NgForm } from '@angular/forms';
+import { LoginData } from './login-data';
 
 @Component({
   selector: 'app-login',
@@ -12,42 +14,82 @@ import { HttpErrorResponse } from '@angular/common/http';
 export class LoginComponent {
 
   userAccount!: UserAccount;
-  userRole!: String;
+  userId!: number;
 
   constructor(private router: Router, private regService: RegService) { }
 
-  userLogin(userEmail: String, userPassword: String) {
+  onLogin(loginForm: NgForm): void {
 
-    this.getUser(userEmail);
+    let userMail: String = loginForm.value.userMail;
+    let userPassword: String = loginForm.value.userPassword;
+
+    console.log(userMail);
+    console.log(userPassword);
 
 
-    this.regService.loginUser(this.userAccount.id, userPassword).subscribe(
-      (response: String) => {
-        this.userRole = response;
-      },
-      (error: HttpErrorResponse) => {
-        console.log(error.message);
-      }
-    )
+    /*
+    const loginData: LoginData = {
+      email: userMail,
+      password: userPassword
+    };
+*/
+
+    console.log("Login");
+    /*
+        this.regService.loginUser(userMail, userPassword).subscribe(
+          (response: number) => {
+            this.userId = response;
+            console.log(1);
+            if (this.userId == undefined) {
+              this.userId = 1;
+            }
+            this.router.navigate(['/user', { tempUserId: this.userId }]);
+          },
+          (error: HttpErrorResponse) => {
+            console.log(2);
+            console.log(error.message);
+          }
+        )
+    */
+
+    this.userId = 1;
+    this.router.navigate(['/user', { tempUserId: this.userId }]);
     // Switch Case
-    if (this.userRole == "USER") {
-      this.router.navigate(['/user']);
-    }
+    //if (this.userRole == "USER") {
+    //this.router.navigate(['/user', { tempUserId: this.userId }]);
+    // }
 
-    if (this.userRole == "EMPLOYEE") {
-      this.router.navigate(['/employee']);
-    }
+    // if (this.userRole == "EMPLOYEE") {
+    //  this.router.navigate(['/employee']);
+    // }
   }
 
-  getUser(userEmail: String) {
-    this.regService.getUser(userEmail).subscribe(
+  onRegister(regForm: NgForm): void {
+
+    console.log("onRegister");
+    document.getElementById('register-form"')?.click;
+    console.log(regForm.value);
+    this.regService.registerUser(regForm.value).subscribe(
       (response: UserAccount) => {
-        this.userAccount = response;
+        console.log(response);
+        //this.getEmployees();
+
+        regForm.reset();
+
+        //if (this.userRole == "USER") {
+        this.router.navigate(['/user', { data: response.id }]);
+        // }
+        /*
+        if (this.userRole == "EMPLOYEE") {
+          this.router.navigate(['/employee']);
+        }
+        */
       },
       (error: HttpErrorResponse) => {
-        console.log(error.message);
+        alert(error.message);
+        regForm.reset();
       }
-    )
+    );
   }
 
   registerUser(user: UserAccount) {
@@ -68,6 +110,22 @@ export class LoginComponent {
 
   navToEmployeePage() {
     this.router.navigate(['/employee']);
+  }
+
+
+  public onRegModal(user: UserAccount | null): void {
+
+    const container = document.getElementById('main-container');
+    const button = document.createElement('button');
+
+    button.type = 'button';
+    button.style.display = 'none';
+
+    button.setAttribute('data-bs-toggle', 'modal');
+    button.setAttribute('data-bs-target', '#regModal');
+
+    container?.appendChild(button);
+    button.click();
   }
 
 }

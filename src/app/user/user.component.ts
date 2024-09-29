@@ -147,4 +147,17 @@ export class UserComponent implements OnInit {
       userAccount.deposit = this.depositsSorted;
     }
   };
+
+  cancelDeposit(userId : number, deposit : Deposit, tokenId : number): boolean{
+
+    this.userAccountService.cancelPayment(userId, deposit, tokenId).subscribe(
+      (response : number) => {
+        console.log("Comp.TS");
+        return true;
+      }, (error : HttpErrorResponse) => {
+        console.log(error.message);
+      }
+    );
+    return false;
+  }
 }

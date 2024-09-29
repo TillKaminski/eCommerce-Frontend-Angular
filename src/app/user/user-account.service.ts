@@ -33,4 +33,19 @@ export class UserAccountService {
     public sendPayment(userId: number, deposit: Deposit): Observable<boolean> {
         return this.http.post<boolean>(`${this.API_URL}/pay/${userId}/addpayment`, deposit);
     };
+
+    public cancelPayment(userId: number, deposit: Deposit, token: number): Observable<number> {
+
+
+        // let getToken : Observable<number> =  this.http.post<number>(`${this.API_URL}/payments/${deposit.id}/cancel/${token}`, deposit);
+        
+        
+
+        return this.http.post<number>(`${this.API_URL}/payments/${deposit.id}/cancel/${token}`, deposit);
+        
+        // if (token > 0) {
+        //    return true;
+        // }
+        // return false;
+    };
 }

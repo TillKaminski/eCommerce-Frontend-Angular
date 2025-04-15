@@ -76,9 +76,10 @@
                         <th *ngIf="!deposit?.authorized" style="color: red;" scope="col">in Prüfung</th>
                         <th scope="col">{{formatNumber(deposit.depositValue)}} € </th>
                         <th *ngIf="!deposit?.authorized">
-                            <button *ngIf="!deposit?.authorized" class="btn btn-outline-danger" style="margin-right: 20px; color: red" scope="col" (click)="cancelDeposit(currentUser.id, deposit, 4242)"> stornieren </button>
+                            <button *ngIf="!deposit?.authorized" class="btn btn-outline-danger" style="margin-right: 20px; color: red"
+                                    scope="col" (click)="cancelDeposit(currentUser.id, deposit.id, 4242)"> stornieren </button>
                         </th>
-                        
+
                     </tr>
                     <tr>
                         <th scope="col"></th>

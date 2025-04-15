@@ -90,9 +90,14 @@ export class UserComponent implements OnInit {
     }
 
     this.userAccountService.sendPayment(this.currentUser.id, deposit).subscribe(
-      (response: boolean) => {
-        console.log("Payment erfolgreich! (" + response + ")");
-        console.log("->" + this.currentUser.id + " - " + deposit); // Zahlung true, Abheben false
+      (response: Deposit) => {
+        console.log(response)
+        if (response != null) {
+          console.log("Payment erfolgreich! (" + response.description + ", [" + response.depositValue + "])");
+          console.log("->" + this.currentUser.id + " - " + deposit); // Zahlung true, Abheben false
+        } else {
+          console.log("Payment fehlgeschlagen!");
+        }
         this.getData();
       },
       (error: HttpErrorResponse) => {
@@ -148,11 +153,11 @@ export class UserComponent implements OnInit {
     }
   };
 
-  cancelDeposit(userId : number, deposit : Deposit, tokenId : number): boolean{
+  cancelDeposit(userId : number, depositId : number, tokenId : number): boolean{
 
-    this.userAccountService.cancelPayment(userId, deposit, tokenId).subscribe(
+    this.userAccountService.cancelPayment(userId, depositId, tokenId).subscribe(
       (response : number) => {
-        console.log("Comp.TS");
+        this.getData()
         return true;
       }, (error : HttpErrorResponse) => {
         console.log(error.message);

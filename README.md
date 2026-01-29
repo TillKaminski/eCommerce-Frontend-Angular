@@ -1,31 +1,41 @@
-# ECommerceFrontend
+# Finance Dashboard – Angular Frontend
 
-### Registrierung
-Soll als Startseite der Anwendung dienen. Wenn der Login erfolgreich war, wird je nach Rolle des Nutzers auf die Seite "Nutzer" oder "Mitarbeiter" navigiert. Registrierung fügt neue Nutzer der Datenbank hinzu. Möglichkeit ein Startkapital zu vergeben. Dieses wird im Teil "Mitarbeiter" für die Berechnung der Kontostände einbezogen (kann beim Testen für Verwirrung sorgen).
+![Angular](https://img.shields.io/badge/angular-%23DD0031.svg?style=for-the-badge&logo=angular&logoColor=white)
+![TypeScript](https://img.shields.io/badge/typescript-%23007ACC.svg?style=for-the-badge&logo=typescript&logoColor=white)
+![Bootstrap](https://img.shields.io/badge/bootstrap-%238511FA.svg?style=for-the-badge&logo=bootstrap&logoColor=white)
 
-Login für Demonstration mit Zugriff auf mehrere Nutzerkonten nicht sinnvoll. Button Login für diese Version nicht anwählbar.
+> Companion Backend Repository: [eCommerce-Backend](https://github.com/TillKaminski/ecommerce-backend)
 
-### Nutzer
+This is the web frontend for a Finance Dashboard, developed as a rapid prototype during a technical coding challenge. It enables users to manage their accounts and provides employees with a dedicated interface for transaction authorization.
 
-Bereich für Nutzer, in dem Transaktionen ausgeführt werden können. Im oberen Teil befinden sich Schaltflächen, durch die zu einem anderen Nutzerkonto gewechselt werden kann. Dient Testzwecken. Neu registrierte Nutzer werden auch angezeigt.
+---
 
-### Mitarbeiter
+## 📺 Fullstack Workflow (Demo)
+![Fullstack Demo GIF](./src/assets/e-commerce-showcase.gif)
+*The demo shows: User switching → Withdrawal request → Staff authorization → Live balance update.*
 
-Oberfläche für Service-Mitarbeiter, um ausstehende Zahlungen freizuschalten. Filterung/Sortierung sowie Auflistung der Kontostände möglich. Über die Felder "Von:" und "Bis" kann ein Suchzeitraum übergeben werden. Format: "YYYY-MM-DD". Nur wenn beide Felder korrekt befüllt sind werden korrekte Ergebnisse geliefert. Die Angaben "Summe: (Betrag) € Ausstehend: (Betrag) €" beziehen sich auf den angegebenen Zeitraum (keine Angabe Zeitraum = alle Zahlungseinträge). Feld "Nr." bezieht sich auf die Zahlungsreihenfolge der Nutzer.
+## ✨ Key Features
+- **Role-Based Views**:
+    - **User Dashboard**: View personal transaction history and initiate deposits or withdrawals.
+    - **Employee Interface**: A comprehensive audit log for staff to review, filter, and approve pending transactions from all users.
+- **Transaction Lifecycle**: Real-time feedback for withdrawal requests until authorized by a staff member.
+- **Filtering:** Staff can filter transactions by date ranges (YYYY-MM-DD) to calculate sums and pending amounts.
+- **Demo Quick-Switch**: Dedicated quick-access buttons to switch between different user profiles for easy demonstration.
 
-### Anmerkung/ToDo
+## 🛠️ Technical Details
+- **Component-Based Routing**: Utilizes the `RouterModule` with a centralized `<router-outlet>` to handle navigation between views without page reloads (SPA architecture).
+- **Layout Architecture**: Implements a global layout with fixed Header/Footer components for a consistent user experience.
+- **Responsive Design:** Built with **Bootstrap 4** and custom Modals (e.g., for registration) to ensure a clean and accessible interface.
+- **REST Integration:** Communicates with a Spring Boot Backend via JSON RequestBodies.
 
-- Login und Registrierung provisorisch -> nachbessern
-- Weiterleitung nach Login entsprechend der Nutzerrolle
-- Nutzerverwaltung: löschen/editieren
-- Nutzer: ausstehende Zahlung stornieren, Einzahlung von Wert < 0 entspricht Auszahlung (prüfen)
-- weitere Sortiermöglichkeiten
-- Transaktionen zwischen Nutzern
+## 🚀 Setup & Development
 
+> **Note**: This frontend requires the [Backend](https://github.com/TillKaminski/ecommerce-backend) to run on port `8080`.
 
-- Kommunikation zum Backend über RequestBodies (z.B. Datum-Von und Datum-Bis), Lösung der Endpunkte ist provisorisch
-- Passwörter verschlüsseln
-- Fehlerbehandlung (z.B. Registrierung wenn Nutzer bereits in DB, keine Verbindung zum BE, ...)
-
-
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 16.2.0.
+1. Clone the repository.
+2. Install dependencies and start:
+   ```bash
+   npm install
+   ng serve
+   ```
+3. Access the application: Navigate to `http://localhost:4200/`.

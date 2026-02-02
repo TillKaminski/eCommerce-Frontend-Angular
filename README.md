@@ -39,3 +39,7 @@ This is the web frontend for a Finance Dashboard, developed as a rapid prototype
    ng serve
    ```
 3. Access the application: Navigate to `http://localhost:4200/`.
+
+## License
+
+This project is licensed under the MIT License - see the [LICENSE](./LICENSE) file for details.

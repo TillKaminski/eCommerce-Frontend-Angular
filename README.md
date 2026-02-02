@@ -32,6 +32,21 @@ This is the web frontend for a Finance Dashboard, developed as a rapid prototype
 
 > **Note**: This frontend requires the [Backend](https://github.com/TillKaminski/ecommerce-backend) to run on port `8080`.
 
+### Option 1: Quick Start (pre-built)
+
+1. Download the latest build from the **Releases** section and extract the `.zip`.
+2. Ensure [Node.js](https://nodejs.org/) is installed.
+3. In the extracted folder (contains multiple files), run:
+   ```bash
+   # If you have an execution policy error on Windows, run: 
+   # Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope CurrentUser
+   npm install http-server # if not installed
+   npx http-server -p 4200
+   ```
+4. Access the application: Navigate to `http://localhost:4200/`.
+
+### Option 2: Development Setup
+
 1. Clone the repository.
 2. Install dependencies and start:
    ```bash
